@@ -11,7 +11,7 @@
             <img 
               :src="logoUrl" 
               alt="AMWAJ COMMODITIES" 
-              class="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+              class="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain brightness-0 invert"
               loading="eager"
             />
           </NuxtLink>

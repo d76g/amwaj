@@ -56,7 +56,7 @@
         </div>
 
         <!-- Card 2: Text Card Light -->
-        <div class="bg-[#F5F5F5] rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col justify-between aspect-square min-h-[200px] sm:min-h-0">
+        <div class="bg-[#F5F5F5] rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col">
           <div>
             <span class="text-3xl sm:text-4xl md:text-5xl font-bold text-black block mb-2">{{ $t('about.stat1') }}</span>
             <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-2">{{ $t('about.stat1_title') }}</h3>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Card 4: Text Card Accent -->
-        <div class="bg-accent rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col justify-between aspect-square min-h-[200px] sm:min-h-0">
+        <div class="bg-accent rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col">
           <div>
             <span class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-dark block mb-2">{{ $t('about.stat2') }}</span>
             <h3 class="text-base sm:text-lg md:text-xl font-bold text-primary-dark mb-2">{{ $t('about.stat2_title') }}</h3>
