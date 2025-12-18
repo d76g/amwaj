@@ -101,39 +101,42 @@
       </div>
 
       <!-- Mobile Menu -->
-      <div
-        ref="mobileMenuRef"
-        class="md:hidden fixed top-full left-0 right-0 bg-black/95 backdrop-blur-md border-t border-white/10 transition-all duration-300 overflow-hidden"
-        :class="mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'"
-      >
-        <div class="container mx-auto px-4 py-6 space-y-4">
-          <NuxtLink
-            v-for="item in navItems"
-            :key="item.id"
-            :to="`#${item.id}`"
-            class="block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
-            :class="activeSection === item.id 
-              ? 'bg-accent text-primary-dark' 
-              : 'text-white hover:bg-white/10'"
-            @click="(e) => { e.preventDefault(); scrollToSection(item.id); toggleMobileMenu(); }"
-          >
-            {{ $t(`nav.${item.key}`) }}
-          </NuxtLink>
-          <!-- Mobile Contact CTA -->
-          <NuxtLink
-            to="#contact"
-            @click.prevent="scrollToSection('contact'); toggleMobileMenu();"
-            class="flex items-center justify-center gap-2 bg-accent text-primary-dark px-4 py-3 rounded-lg font-semibold hover:bg-white transition-all duration-300"
-          >
-            <span>{{ $t('nav.contact') }}</span>
-            <img 
-              src="/icons/right-up.png" 
-              alt="arrow up right" 
-              class="w-6 h-6"
-            />
-          </NuxtLink>
+      <Transition name="mobile-menu">
+        <div
+          v-if="mobileMenuOpen"
+          ref="mobileMenuRef"
+          class="md:hidden fixed left-0 right-0 bg-black/95 backdrop-blur-md border-t border-white/10 shadow-2xl"
+          :style="{ top: `${navHeight}px`, zIndex: 45 }"
+        >
+          <div class="container mx-auto px-4 py-6 space-y-4">
+            <NuxtLink
+              v-for="item in navItems"
+              :key="item.id"
+              :to="`#${item.id}`"
+              class="block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
+              :class="activeSection === item.id 
+                ? 'bg-accent text-primary-dark' 
+                : 'text-white hover:bg-white/10'"
+              @click="(e) => { e.preventDefault(); scrollToSection(item.id); toggleMobileMenu(); }"
+            >
+              {{ $t(`nav.${item.key}`) }}
+            </NuxtLink>
+            <!-- Mobile Contact CTA -->
+            <NuxtLink
+              to="#contact"
+              @click.prevent="scrollToSection('contact'); toggleMobileMenu();"
+              class="flex items-center justify-center gap-2 bg-accent text-primary-dark px-4 py-3 rounded-lg font-semibold hover:bg-white transition-all duration-300"
+            >
+              <span>{{ $t('nav.contact') }}</span>
+              <img 
+                src="/icons/right-up.png" 
+                alt="arrow up right" 
+                class="w-6 h-6"
+              />
+            </NuxtLink>
+          </div>
         </div>
-      </div>
+      </Transition>
     </div>
   </nav>
 </template>
@@ -182,6 +185,7 @@ const activeSection = ref('home')
 const isScrolling = ref(false)
 const mobileMenuOpen = ref(false)
 const mobileMenuRef = ref(null)
+const navHeight = ref(100)
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
@@ -255,15 +259,21 @@ onMounted(() => {
   if (!process.client) return
   
   // Immediately hide elements before animation starts to prevent flash
-  gsap.set(navRef.value, { y: -100, autoAlpha: 0 })
-  gsap.set([logoRef.value, menuRef.value, rightRef.value], { y: -20, autoAlpha: 0 })
-  if (mobileMenuRef.value) {
-    gsap.set(mobileMenuRef.value, { autoAlpha: 0 })
+  if (navRef.value) {
+    gsap.set(navRef.value, { y: -100, autoAlpha: 0 })
   }
+  const elementsToHide = [logoRef.value, menuRef.value, rightRef.value].filter(Boolean)
+  if (elementsToHide.length > 0) {
+    gsap.set(elementsToHide, { y: -20, autoAlpha: 0 })
+  }
+  // Mobile menu visibility is controlled by v-if, no need to set here
   
   // Wait for splash screen to start fading before beginning animations
   // Splash screen waits 1200ms before fading, so we start animations at that point
   setTimeout(() => {
+    // Check if elements exist before animating
+    if (!navRef.value) return
+    
     // GSAP Animation
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
@@ -273,22 +283,27 @@ onMounted(() => {
       duration: 1,
       delay: 0.2
     })
-    .to([logoRef.value, menuRef.value, rightRef.value], {
-      y: 0,
-      autoAlpha: 1,
-      duration: 0.8,
-      stagger: 0.1
-    }, "-=0.5")
+    
+    const elementsToAnimate = [logoRef.value, menuRef.value, rightRef.value].filter(Boolean)
+    if (elementsToAnimate.length > 0) {
+      tl.to(elementsToAnimate, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        stagger: 0.1
+      }, "-=0.5")
+    }
   }, 1200) // Match splash screen fade start timing
 
   // Expose navbar height as CSS variable and set up observer
   const updateNavHeight = () => {
-    const navHeight = navRef.value?.offsetHeight || 100
-    document.documentElement.style.setProperty('--nav-height', `${navHeight}px`)
-    return navHeight
+    const height = navRef.value?.offsetHeight || 100
+    navHeight.value = height
+    document.documentElement.style.setProperty('--nav-height', `${height}px`)
+    return height
   }
   
-  const navHeight = updateNavHeight()
+  updateNavHeight()
   
   // Update nav height on resize
   const resizeObserver = new ResizeObserver(() => {
@@ -298,34 +313,65 @@ onMounted(() => {
     resizeObserver.observe(navRef.value)
   }
 
-  const observerOptions = {
-    root: null,
-    rootMargin: `-${navHeight}px 0px 0px 0px`,
-    threshold: 0.1
-  }
- 
-  const observerCallback = (entries) => {
-    // Don't update active section if we're programmatically scrolling
-    if (isScrolling.value) return
+  // Watch for mobile menu open/close to ensure nav height is updated
+  watch(mobileMenuOpen, () => {
+    nextTick(() => {
+      updateNavHeight()
+    })
+  })
+
+  // Create observer with proper rootMargin format
+  let observer = null
+  
+  const createObserver = () => {
+    // Disconnect existing observer if any
+    if (observer) {
+      observer.disconnect()
+    }
     
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const sectionId = entry.target.id
-        if (sectionId && navItems.some(item => item.id === sectionId)) {
-          activeSection.value = sectionId
+    const height = navHeight.value || 100
+    // Ensure rootMargin is a valid CSS value (must be pixels or percent)
+    const rootMarginValue = `-${Math.max(0, height)}px 0px 0px 0px`
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: rootMarginValue,
+      threshold: 0.1
+    }
+   
+    const observerCallback = (entries) => {
+      // Don't update active section if we're programmatically scrolling
+      if (isScrolling.value) return
+      
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id
+          if (sectionId && navItems.some(item => item.id === sectionId)) {
+            activeSection.value = sectionId
+          }
         }
+      })
+    }
+
+    observer = new IntersectionObserver(observerCallback, observerOptions)
+    
+    // Observe all sections
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.id)
+      if (element) {
+        observer.observe(element)
       }
     })
   }
 
-  const observer = new IntersectionObserver(observerCallback, observerOptions)
-
-  // Observe all sections
-  navItems.forEach((item) => {
-    const element = document.getElementById(item.id)
-    if (element) {
-      observer.observe(element)
-    }
+  // Create initial observer
+  createObserver()
+  
+  // Recreate observer when navHeight changes
+  watch(navHeight, () => {
+    nextTick(() => {
+      createObserver()
+    })
   })
 
   // Check on mount

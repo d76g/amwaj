@@ -291,6 +291,12 @@ onMounted(() => {
   // Wait for splash screen to start fading before beginning animations
   // Splash screen waits 1200ms before fading, so we start animations at that point
   setTimeout(() => {
+    // Check if all required elements exist before animating
+    if (!bgImageContainer.value || !headline.value || !subtitle.value || !ctaWrapper.value) {
+      console.warn('HomeSection: Some animation targets are not available')
+      return
+    }
+
     const tl = gsap.timeline()
 
     tl.to(bgImageContainer.value, {

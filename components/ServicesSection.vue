@@ -95,7 +95,7 @@
       <div class="mt-6 sm:mt-8 flex flex-col gap-6 sm:gap-8">
         
         <!-- Market Intelligence -->
-        <div ref="marketIntelligenceCard" class="bg-primary-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-12 overflow-hidden group hover:bg-accent transition-all duration-300">
+        <div ref="marketIntelligenceCard" class="bg-primary-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-12 overflow-hidden group hover:bg-accent transition-all duration-300" style="will-change: transform, opacity;">
           <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-10 items-center">
             <!-- Image -->
             <div class="w-full lg:w-1/2 h-48 sm:h-56 md:h-64 lg:h-[400px] rounded-xl md:rounded-2xl overflow-hidden relative shadow-lg">
@@ -123,7 +123,7 @@
         </div>
 
         <!-- Finance Solutions -->
-        <div ref="financeSolutionsCard" class="bg-primary-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-12 overflow-hidden group hover:bg-accent transition-all duration-300">
+        <div ref="financeSolutionsCard" class="bg-primary-dark rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-12 overflow-hidden group hover:bg-accent transition-all duration-300" style="will-change: transform, opacity;">
           <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-10 items-center">
             <!-- Image -->
             <div class="w-full lg:w-1/2 h-48 sm:h-56 md:h-64 lg:h-[400px] rounded-xl md:rounded-2xl overflow-hidden relative shadow-lg">
@@ -215,30 +215,73 @@ onMounted(() => {
     }
   )
 
-  // Market Intelligence Card - Animate from left
-  gsap.from(marketIntelligenceCard.value, {
-    scrollTrigger: {
-      trigger: marketIntelligenceCard.value,
-      start: 'top 85%',
-      toggleActions: 'play none none reverse'
-    },
-    x: -100,
-    autoAlpha: 0,
-    duration: 1.2,
-    ease: 'power3.out'
-  })
+  // Market Intelligence Card - Animate from left (optimized for performance)
+  if (marketIntelligenceCard.value) {
+    // Use fromTo for better performance and smoother animation
+    const marketIntelligenceTL = gsap.fromTo(marketIntelligenceCard.value, 
+      {
+        x: -60,
+        autoAlpha: 0,
+        force3D: true
+      },
+      {
+        scrollTrigger: {
+          trigger: marketIntelligenceCard.value,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+          once: true,
+          invalidateOnRefresh: true,
+          markers: false
+        },
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+        force3D: true,
+        immediateRender: false,
+        onComplete: () => {
+          // Remove will-change after animation for better performance
+          if (marketIntelligenceCard.value) {
+            marketIntelligenceCard.value.style.willChange = 'auto'
+          }
+        }
+      }
+    )
+  }
 
-  // Finance Solutions Card - Animate from right
-  gsap.from(financeSolutionsCard.value, {
-    scrollTrigger: {
-      trigger: financeSolutionsCard.value,
-      start: 'top 85%',
-      toggleActions: 'play none none reverse'
-    },
-    x: 100,
-    autoAlpha: 0,
-    duration: 1.2,
-    ease: 'power3.out'
-  })
+  // Finance Solutions Card - Animate from right (optimized for performance)
+  if (financeSolutionsCard.value) {
+    // Use fromTo for better performance and smoother animation
+    const financeSolutionsTL = gsap.fromTo(financeSolutionsCard.value, 
+      {
+        x: 60,
+        autoAlpha: 0,
+        force3D: true
+      },
+      {
+        scrollTrigger: {
+          trigger: financeSolutionsCard.value,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+          once: true,
+          invalidateOnRefresh: true,
+          markers: false
+        },
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+        force3D: true,
+        immediateRender: false,
+        delay: 0.1, // Small stagger to prevent resource contention
+        onComplete: () => {
+          // Remove will-change after animation for better performance
+          if (financeSolutionsCard.value) {
+            financeSolutionsCard.value.style.willChange = 'auto'
+          }
+        }
+      }
+    )
+  }
 })
 </script>

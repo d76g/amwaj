@@ -134,6 +134,12 @@ server {
     listen 80;
     server_name t9dev.cloud www.t9dev.cloud;
 
+    # Allow Let's Encrypt ACME challenge (MUST be before other location blocks)
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        allow all;
+    }
+
     # Redirect HTTP to HTTPS (after SSL setup)
     # return 301 https://$server_name$request_uri;
 
@@ -172,11 +178,50 @@ sudo systemctl reload nginx
 
 ## Step 5: Setup SSL Certificate (Let's Encrypt)
 
-### 5.1 Obtain SSL Certificate
+### 5.1 Create Certbot Directory
+
+Before running Certbot, create the directory for ACME challenges:
 
 ```bash
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+sudo mkdir -p /var/www/certbot
+sudo chmod -R 755 /var/www/certbot
 ```
+
+### 5.2 Verify Nginx Configuration
+
+Make sure your Nginx config includes the `.well-known/acme-challenge` location block (see Step 4.1), then:
+
+```bash
+# Test Nginx configuration
+sudo nginx -t
+
+# Reload Nginx if test passes
+sudo systemctl reload nginx
+```
+
+### 5.3 Verify Domain Points to Server
+
+Before running Certbot, ensure:
+1. Your domain DNS A record points to your server's IP address
+2. Port 80 is open and accessible from the internet
+3. You can access `http://t9dev.cloud` and see your site
+
+Test with:
+```bash
+curl -I http://t9dev.cloud
+```
+
+### 5.4 Obtain SSL Certificate
+
+```bash
+sudo certbot --nginx -d t9dev.cloud -d www.t9dev.cloud
+```
+
+**Note:** If you get a 404 error, make sure:
+- The `.well-known/acme-challenge` location block is in your Nginx config
+- The `/var/www/certbot` directory exists and is writable
+- Port 80 is not blocked by firewall
+- Your domain DNS is properly configured
 
 Follow the prompts to complete the SSL setup.
 

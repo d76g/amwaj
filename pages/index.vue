@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen overflow-x-hidden w-full max-w-full">
     <TheNavigation />
     <!-- Motion Path Waypoints - Invisible markers for SVG animation -->
     <div class="motion-path-waypoints pointer-events-none">
