@@ -1,0 +1,35 @@
+{
+    "name": "amwaj",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "start": "nuxt start -p 3000"
+    },
+    "dependencies": {
+        "@nuxtjs/google-fonts": "^3.2.0",
+        "@nuxtjs/i18n": "^10.2.0",
+        "@nuxtjs/tailwindcss": "^6.14.0",
+        "@studio-freight/lenis": "^1.0.42",
+        "@types/matter-js": "^0.20.2",
+        "@vueuse/motion": "^3.0.3",
+        "animejs": "^4.2.2",
+        "dotted-map": "^2.2.3",
+        "gsap": "^3.13.0",
+        "matter-js": "^0.20.0",
+        "nuxt": "^4.2.1",
+        "vue": "^3.5.24",
+        "vue-router": "^4.6.3"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.22",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^3.4.18",
+        "vite": "^7.2.2"
+    }
+}

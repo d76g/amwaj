@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About AMWAJ",
+    "services": "Services",
+    "products": "Products",
+    "contact": "Get in touch"
+  },
+  "home": {
+    "title": "Agri-Commodities Trading",
+    "companyName": "AMWAJ COMMODITIES",
+    "subtitle": "Bridging the gap between supply and demand of agri-commodities",
+    "cta": "Trade with us"
+  },
+  "about": {
+    "eyebrow": "Who We Are",
+    "title": "AMWAJ COMMODITIES",
+    "description": "AMWAJ COMMODITIES is an international agri-commodity trading firm specializing in the trading and distribution of grains and oilseed products. We combine professional expertise with a digital, analytical approach to significantly improve supply chain efficiency and create new market opportunities for our partners.",
+    "cta": "Discover AMWAJ",
+    "stat1": "15+",
+    "stat1_title": "Years Experience",
+    "stat1_desc": "Delivering excellence in global agricultural trading markets.",
+    "stat2": "50+",
+    "stat2_title": "Global Partners",
+    "stat2_desc": "Building trusted relationships across major continents."
+  },
+  "stats": {
+    "title": "Build Your Competitive Edge in Global Commodities Today.",
+    "cta": "Start Your Inquiry",
+    "supplyChain": "Supply Chain Efficiency",
+    "trust": "Trust & Transparency",
+    "coreCommodities": "Core Commodities",
+    "globalPartners": "Global Partners"
+  },
+  "services": {
+    "eyebrow": "Our Expertise",
+    "title": "Specialists in Agri-Commodity",
+    "description": "We are engaged in procurement, transformation activities, marketing, and distribution. We provide access to the latest market intelligence and offer tailor-made financial solutions.",
+    "cta": "Get in Touch",
+    "trading": {
+      "title": "Physical Trading",
+      "description": "We are engaged in procurement, transformation activities, marketing, and distribution."
+    },
+    "sourcing": {
+      "title": "Product Sourcing",
+      "description": "We source from key exporting regions and work with prominent producers and trading firms while paying close attention to the quality of the crops we procure."
+    },
+    "transformation": {
+      "title": "Transformation",
+      "description": "We move agri-commodities from production to consumption locations efficiently, leveraging our robust logistics and storage facilities. AMWAJ COMMODITIES generates value by optimizing these transformations."
+    },
+    "finance": {
+      "title": "Smart Innovation",
+      "description": "Seamless cargo flow for spot and forward delivery contracts. Our robust risk management strategy exemplifies this, which allows us to optimize value, increase efficiency, and offer competitively."
+    },
+    "marketIntelligence": {
+      "title": "Market Intelligence",
+      "description": "We provide access to the latest market intelligence to help you make informed decisions, leveraging data-driven insights for optimal trading strategies."
+    },
+    "financeSolutions": {
+      "title": "Finance Solutions",
+      "description": "We offer tailor-made financial solutions to support your business growth, ensuring seamless transactions and robust risk management for all your commodity needs."
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "barley": "Barley",
+    "wheat": "Wheat",
+    "corn": "Corn",
+    "soybean": "Soybean"
+  },
+  "globalNetwork": {
+    "eyebrow": "Global Impact",
+    "title": "Global Network",
+    "description": "AMWAJ COMMODITIES is committed to expanding its global footprint to cover Argentina, Brazil, North America, the Black Sea region, Australia, and the MENA region.",
+    "mena": "MENA",
+    "usa": "USA",
+    "russia": "Russia",
+    "argentina": "Argentina",
+    "ukraine": "Ukraine",
+    "brazil": "Brazil",
+    "romania": "Romania"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Let's discuss how we can help your business grow",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send Message",
+    "address": "Address",
+    "phone": "Phone",
+    "emailLabel": "Email",
+    "addressLine1": "Unit No: 405, The Dome Tower",
+    "addressLine2": "Plot No: JLT-PH1-N1",
+    "addressLine3": "Jumeirah Lakes Towers, Dubai, UAE",
+    "phoneNumber": "+971505209038",
+    "emailUser": "contact",
+    "emailDomain": "amwajcommodities.com"
+  },
+  "footer": {
+    "brand_text": "Bridging the gap between supply and demand of agri-commodities.",
+    "nav_title": "Navigation",
+    "resources_title": "Services",
+    "company_title": "Company",
+    "careers": "Careers",
+    "sustainability": "Sustainability",
+    "press": "Press",
+    "legal_privacy": "Privacy Policy",
+    "legal_terms": "Terms & Conditions",
+    "copyright": "© 2024 AMWAJ COMMODITIES. All rights reserved."
+  }
+}
