@@ -1,7 +1,7 @@
 <template>
   <section 
     id="stats"
-    class="py-24 bg-gradient-to-br from-primary to-primary-dark"
+    class="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-primary to-primary-dark"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
@@ -9,12 +9,12 @@
           v-motion
           :initial="{ opacity: 0, y: 30 }"
           :visible="{ opacity: 1, y: 0 }"
-          class="text-3xl md:text-4xl font-bold text-white text-center mb-12"
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 sm:mb-10 md:mb-12"
         >
           {{ $t('stats.title') }}
         </h2>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
           <div
             v-for="(stat, index) in stats"
             :key="index"
@@ -22,10 +22,10 @@
             :initial="{ opacity: 0, y: 50 }"
             :visible="{ opacity: 1, y: 0 }"
             :delay="index * 100"
-            class="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center"
+            class="bg-white/10 backdrop-blur-sm p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl text-center"
           >
-            <h3 class="text-2xl font-bold text-accent mb-2">0</h3>
-            <p class="text-white">{{ $t(`stats.${stat.key}`) }}</p>
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-accent mb-1 sm:mb-2">0</h3>
+            <p class="text-white text-xs sm:text-sm md:text-base">{{ $t(`stats.${stat.key}`) }}</p>
           </div>
         </div>
         
@@ -36,7 +36,7 @@
             :visible="{ opacity: 1, scale: 1 }"
             :delay="500"
             to="#contact"
-            class="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            class="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-accent text-primary-dark font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
           >
             {{ $t('stats.cta') }}
           </NuxtLink>

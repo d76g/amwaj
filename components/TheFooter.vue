@@ -1,21 +1,21 @@
 <template>
-  <footer ref="footerRef" class="bg-primary-forest pt-12 md:pt-20 pb-8 md:pb-10 px-4 sm:px-6 lg:px-16 overflow-hidden">
+  <footer ref="footerRef" class="bg-primary-forest pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 md:pb-10 px-4 sm:px-6 lg:px-16 overflow-hidden">
     <!-- Top Section -->
-    <div ref="columnsRef" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 mb-10 md:mb-16">
+    <div ref="columnsRef" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-10 mb-8 sm:mb-12 md:mb-16">
       <!-- Brand Summary (2fr -> col-span-2) -->
       <div class="sm:col-span-2 lg:col-span-2">
-        <h2 class="text-white text-lg font-bold uppercase tracking-wider mb-4 md:mb-6">AMWAJ</h2>
-        <p class="text-white/80 font-light text-sm max-w-xs leading-relaxed">
+        <h2 class="text-white text-base sm:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4 md:mb-6">AMWAJ</h2>
+        <p class="text-white/80 font-light text-xs sm:text-sm max-w-xs leading-relaxed">
           {{ $t('footer.brand_text') }}
         </p>
       </div>
 
       <!-- Navigation -->
       <div>
-        <h3 class="text-white font-medium text-base mb-3 md:mb-4">{{ $t('footer.nav_title') }}</h3>
-        <ul class="space-y-2 md:space-y-3">
+        <h3 class="text-white font-medium text-sm sm:text-base mb-2 sm:mb-3 md:mb-4">{{ $t('footer.nav_title') }}</h3>
+        <ul class="space-y-1.5 sm:space-y-2 md:space-y-3">
           <li v-for="item in navLinks" :key="item.key">
-            <NuxtLink :to="item.href" class="text-white/70 hover:text-white text-sm font-light transition-colors">
+            <NuxtLink :to="item.href" class="text-white/70 hover:text-white text-xs sm:text-sm font-light transition-colors">
               {{ $t(`nav.${item.key}`) }}
             </NuxtLink>
           </li>
@@ -24,10 +24,10 @@
 
       <!-- Services (Resources) -->
       <div>
-        <h3 class="text-white font-medium text-base mb-3 md:mb-4">{{ $t('footer.resources_title') }}</h3>
-        <ul class="space-y-2 md:space-y-3">
+        <h3 class="text-white font-medium text-sm sm:text-base mb-2 sm:mb-3 md:mb-4">{{ $t('footer.resources_title') }}</h3>
+        <ul class="space-y-1.5 sm:space-y-2 md:space-y-3">
           <li v-for="item in serviceLinks" :key="item.key">
-            <a :href="item.href" class="text-white/70 hover:text-white text-sm font-light transition-colors">
+            <a :href="item.href" class="text-white/70 hover:text-white text-xs sm:text-sm font-light transition-colors">
               {{ $t(`services.${item.key}.title`) }}
             </a>
           </li>
@@ -36,10 +36,10 @@
 
       <!-- Company -->
       <div>
-        <h3 class="text-white font-medium text-base mb-3 md:mb-4">{{ $t('footer.company_title') }}</h3>
-        <ul class="space-y-2 md:space-y-3">
+        <h3 class="text-white font-medium text-sm sm:text-base mb-2 sm:mb-3 md:mb-4">{{ $t('footer.company_title') }}</h3>
+        <ul class="space-y-1.5 sm:space-y-2 md:space-y-3">
           <li v-for="item in companyLinks" :key="item.key">
-            <a href="#" class="text-white/70 hover:text-white text-sm font-light transition-colors">
+            <a href="#" class="text-white/70 hover:text-white text-xs sm:text-sm font-light transition-colors">
               {{ item.label }}
             </a>
           </li>
@@ -48,11 +48,11 @@
     </div>
 
     <!-- Middle Section -->
-    <div ref="middleRef" class="border-t border-white/10 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+    <div ref="middleRef" class="border-t border-white/10 pt-4 sm:pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 text-center md:text-left">
       <p class="text-white/50 text-xs font-light">
         {{ $t('footer.copyright') }}
       </p>
-      <div class="flex gap-4 md:gap-6 flex-wrap justify-center md:justify-end">
+      <div class="flex gap-3 sm:gap-4 md:gap-6 flex-wrap justify-center md:justify-end">
         <a href="#" class="text-white/70 hover:text-white text-xs font-light transition-colors">
           {{ $t('footer.legal_privacy') }}
         </a>
@@ -63,8 +63,8 @@
     </div>
 
     <!-- Bottom Section: Oversized Logo -->
-    <div class="mt-8 md:mt-20 w-full overflow-hidden leading-none flex justify-center items-end">
-      <h1 ref="logoRef" class="text-[20vw] font-extrabold text-white text-center uppercase tracking-tighter opacity-10 select-none translate-y-[15%]">
+    <div class="mt-6 sm:mt-8 md:mt-12 lg:mt-20 w-full overflow-hidden leading-none flex justify-center items-end">
+      <h1 ref="logoRef" class="text-[25vw] sm:text-[22vw] md:text-[20vw] font-extrabold text-white text-center uppercase tracking-tighter opacity-10 select-none translate-y-[15%]">
         AMWAJ
       </h1>
     </div>

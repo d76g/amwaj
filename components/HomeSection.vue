@@ -66,23 +66,23 @@
     </div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-      <div class="grid lg:grid-cols-[1.5fr_1fr] gap-6 sm:gap-8 lg:gap-12 items-end">
+      <div class="grid lg:grid-cols-[1.5fr_1fr] gap-8 sm:gap-10 lg:gap-12 items-end">
         <!-- Headline -->
         <div class="w-full">
           <h1 
             ref="headline"
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white leading-[1.1] gsap-animate-on-mount"
+            class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] gsap-animate-on-mount"
           >
             {{ $t('home.title') }}
-            <span class="block text-accent mt-1 sm:mt-2">{{ $t('home.companyName') }}</span>
+            <span class="block text-accent mt-2 sm:mt-3">{{ $t('home.companyName') }}</span>
           </h1>
         </div>
 
         <!-- Description Group -->
-        <div class="space-y-4 sm:space-y-6 lg:space-y-8 lg:max-w-md mt-6 lg:mt-0">
+        <div class="space-y-4 sm:space-y-6 lg:space-y-8 lg:max-w-md mt-8 lg:mt-0">
           <p 
             ref="subtitle"
-            class="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed gsap-animate-on-mount"
+            class="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 leading-relaxed gsap-animate-on-mount"
           >
             {{ $t('home.subtitle') }}
           </p>
@@ -94,14 +94,14 @@
             @click.prevent="scrollToSection('services')"
             @mouseenter="handleButtonHover"
             @mouseleave="handleButtonLeave"
-            class="inline-flex items-center gap-2 bg-accent text-primary-dark pl-4 pr-1 py-2.5 sm:py-2 rounded-full text-base sm:text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg sm:w-24 lg:w-52"
+            class="inline-flex items-center gap-2 bg-accent text-primary-dark pl-4 pr-1 py-2.5 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <span>{{ $t('home.cta') }}</span>
             <img 
               ref="ctaIcon"
               src="/icons/right-up.png" 
               alt="arrow up right" 
-              class="w-10 h-10 sm:w-12 sm:h-12 transition-all duration-300"
+              class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 transition-all duration-300"
             />
           </NuxtLink>
           </div>

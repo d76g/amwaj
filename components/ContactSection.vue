@@ -1,7 +1,7 @@
 <template>
   <section 
     id="contact"
-    class="py-12 md:py-24 bg-white"
+    class="py-12 sm:py-16 md:py-20 lg:py-24 bg-white"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto">
@@ -9,7 +9,7 @@
           v-motion
           :initial="{ opacity: 0, y: 30 }"
           :visible="{ opacity: 1, y: 0 }"
-          class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center mb-3 md:mb-4"
+          class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary text-center mb-3 sm:mb-4"
         >
           {{ $t('contact.title') }}
         </h2>
@@ -18,12 +18,12 @@
           :initial="{ opacity: 0, y: 30 }"
           :visible="{ opacity: 1, y: 0 }"
           :delay="100"
-          class="text-lg sm:text-xl text-primary text-center mb-8 md:mb-12"
+          class="text-base sm:text-lg md:text-xl text-primary text-center mb-8 sm:mb-10 md:mb-12"
         >
           {{ $t('contact.subtitle') }}
         </p>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
           <div 
             v-motion
             :initial="{ opacity: 0, x: -50 }"

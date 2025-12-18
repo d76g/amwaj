@@ -1,7 +1,7 @@
 <template>
   <nav 
     ref="navRef"
-    class="fixed top-0 left-0 right-0 z-50 py-6 gsap-animate-on-mount"
+    class="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4 md:py-6 gsap-animate-on-mount"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between">
@@ -11,20 +11,20 @@
             <img 
               :src="logoUrl" 
               alt="AMWAJ COMMODITIES" 
-              class="h-28 w-auto object-contain "
+              class="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
               loading="eager"
             />
           </NuxtLink>
         </div>
         
-        <!-- Menu Capsule -->
+        <!-- Menu Capsule - Desktop -->
         <div ref="menuRef" class="hidden md:flex items-center bg-black/60 backdrop-blur-md rounded-full p-2 border border-white/10 gsap-animate-on-mount">
           <NuxtLink
             v-for="item in navItems"
             :key="item.id"
             :ref="el => { if (el) navItemRefs[item.id] = el }"
             :to="`#${item.id}`"
-            class="px-6 py-3 rounded-full text-md font-medium transition-all duration-300"
+            class="px-4 lg:px-6 py-2 lg:py-3 rounded-full text-sm lg:text-md font-medium transition-all duration-300"
             :class="activeSection === item.id 
               ? 'bg-accent text-primary-dark' 
               : 'text-white hover:text-accent'"
@@ -36,16 +36,16 @@
           </NuxtLink>
         </div>
 
-        <!-- Right Side: Lang Switcher + CTA -->
-        <div ref="rightRef" class="flex items-center gap-4 gsap-animate-on-mount">
+        <!-- Right Side: Lang Switcher + CTA + Mobile Menu Button -->
+        <div ref="rightRef" class="flex items-center gap-2 sm:gap-4 gsap-animate-on-mount">
           <!-- Language Switcher -->
-          <div class="flex bg-black/60 backdrop-blur-md rounded-full p-2 border border-white/10">
+          <div class="flex bg-black/60 backdrop-blur-md rounded-full p-1 sm:p-2 border border-white/10">
             <button
               v-for="localeOption in availableLocales"
               :key="localeOption.code"
               @click.prevent="switchLocale(localeOption.code)"
               type="button"
-              class="px-6 py-3 rounded-full text-md font-bold transition-all duration-300"
+              class="px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-full text-xs sm:text-sm lg:text-md font-bold transition-all duration-300"
               :class="currentLocale === localeOption.code 
                 ? 'bg-accent text-primary-dark' 
                 : 'text-white hover:text-accent'"
@@ -54,7 +54,7 @@
             </button>
           </div>
 
-          <!-- Contact CTA -->
+          <!-- Contact CTA - Desktop -->
           <NuxtLink 
             ref="contactButton"
             to="#contact"
@@ -69,6 +69,67 @@
               src="/icons/right-up.png" 
               alt="arrow up right" 
               class="w-12 h-12 transition-all duration-300"
+            />
+          </NuxtLink>
+
+          <!-- Mobile Menu Button -->
+          <button
+            @click="toggleMobileMenu"
+            class="md:hidden flex items-center justify-center w-10 h-10 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-accent hover:text-primary-dark transition-all duration-300"
+            aria-label="Toggle menu"
+          >
+            <svg 
+              v-if="!mobileMenuOpen"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg 
+              v-else
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        ref="mobileMenuRef"
+        class="md:hidden fixed top-full left-0 right-0 bg-black/95 backdrop-blur-md border-t border-white/10 transition-all duration-300 overflow-hidden"
+        :class="mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'"
+      >
+        <div class="container mx-auto px-4 py-6 space-y-4">
+          <NuxtLink
+            v-for="item in navItems"
+            :key="item.id"
+            :to="`#${item.id}`"
+            class="block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
+            :class="activeSection === item.id 
+              ? 'bg-accent text-primary-dark' 
+              : 'text-white hover:bg-white/10'"
+            @click="(e) => { e.preventDefault(); scrollToSection(item.id); toggleMobileMenu(); }"
+          >
+            {{ $t(`nav.${item.key}`) }}
+          </NuxtLink>
+          <!-- Mobile Contact CTA -->
+          <NuxtLink
+            to="#contact"
+            @click.prevent="scrollToSection('contact'); toggleMobileMenu();"
+            class="flex items-center justify-center gap-2 bg-accent text-primary-dark px-4 py-3 rounded-lg font-semibold hover:bg-white transition-all duration-300"
+          >
+            <span>{{ $t('nav.contact') }}</span>
+            <img 
+              src="/icons/right-up.png" 
+              alt="arrow up right" 
+              class="w-6 h-6"
             />
           </NuxtLink>
         </div>
@@ -119,6 +180,12 @@ const navItems = [
 
 const activeSection = ref('home')
 const isScrolling = ref(false)
+const mobileMenuOpen = ref(false)
+const mobileMenuRef = ref(null)
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
 
 const handleContactButtonHover = () => {
   if (contactIcon.value) {
@@ -190,6 +257,9 @@ onMounted(() => {
   // Immediately hide elements before animation starts to prevent flash
   gsap.set(navRef.value, { y: -100, autoAlpha: 0 })
   gsap.set([logoRef.value, menuRef.value, rightRef.value], { y: -20, autoAlpha: 0 })
+  if (mobileMenuRef.value) {
+    gsap.set(mobileMenuRef.value, { autoAlpha: 0 })
+  }
   
   // Wait for splash screen to start fading before beginning animations
   // Splash screen waits 1200ms before fading, so we start animations at that point
@@ -277,6 +347,11 @@ const scrollToSection = async (id) => {
 
   const element = document.getElementById(id)
   if (!element) return
+
+  // Close mobile menu if open
+  if (mobileMenuOpen.value) {
+    mobileMenuOpen.value = false
+  }
 
   // Set scrolling flag to prevent IntersectionObserver from interfering
   isScrolling.value = true

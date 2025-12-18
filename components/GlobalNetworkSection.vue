@@ -1,22 +1,22 @@
 <template>
   <section 
     id="global-network"
-    class="py-24 bg-primary relative overflow-hidden"
+    class="py-12 sm:py-16 md:py-20 lg:py-24 bg-primary relative overflow-hidden"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <!-- Header Group: Split Layout -->
-      <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-10">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 sm:mb-16 md:mb-20 gap-6 sm:gap-8 md:gap-10">
         
         <!-- Left Column -->
-        <div class="md:w-1/2">
+        <div class="w-full md:w-1/2">
           <div 
             v-motion
             :initial="{ opacity: 0, y: 20 }"
             :visible="{ opacity: 1, y: 0 }"
-            class="inline-block border border-white/20 rounded-full px-5 py-2 mb-6 backdrop-blur-sm"
+            class="inline-block border border-white/20 rounded-full px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 mb-4 sm:mb-6 backdrop-blur-sm"
           >
-            <span class="text-sm font-medium text-white tracking-wide uppercase">
+            <span class="text-xs sm:text-sm font-medium text-white tracking-wide uppercase">
               {{ $t('globalNetwork.eyebrow') }}
             </span>
           </div>
@@ -25,7 +25,7 @@
             :initial="{ opacity: 0, y: 30 }"
             :visible="{ opacity: 1, y: 0 }"
             :delay="100"
-            class="text-5xl md:text-[72px] font-bold text-white leading-tight"
+            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[72px] font-bold text-white leading-tight"
           >
             {{ $t('globalNetwork.title').split(' ')[0] }} 
             <span class="text-primary-lime">{{ $t('globalNetwork.title').split(' ').slice(1).join(' ') }}</span>
@@ -33,13 +33,13 @@
         </div>
 
         <!-- Right Column -->
-        <div class="md:w-1/3 pb-2">
+        <div class="w-full md:w-1/3 pb-0 md:pb-2">
           <p 
             v-motion
             :initial="{ opacity: 0, y: 30 }"
             :visible="{ opacity: 1, y: 0 }"
             :delay="200"
-            class="text-xl text-white/70 font-light leading-relaxed"
+            class="text-base sm:text-lg md:text-xl text-white/70 font-light leading-relaxed"
           >
             {{ $t('globalNetwork.description') }}
           </p>
@@ -49,7 +49,7 @@
       <!-- Map Visualization -->
       <div 
         v-if="points.length > 0"
-        class="relative w-full aspect-[2/1] max-w-6xl mx-auto"
+        class="relative w-full aspect-[2/1] sm:aspect-[2/1] max-w-6xl mx-auto"
         v-motion
         :initial="{ opacity: 0, scale: 0.95 }"
         :visible="{ opacity: 1, scale: 1 }"
@@ -90,7 +90,7 @@
               text-anchor="middle"
               dominant-baseline="middle"
               class="fill-white pointer-events-none"
-              style="font-family: 'Poppins', sans-serif; font-size: 2px; font-weight: 600;"
+              :style="{ fontFamily: 'Poppins, sans-serif', fontSize: isMobile ? '1.5px' : '2px', fontWeight: 600 }"
             >
               {{ $t(`globalNetwork.${pin.location.key}`) }}
             </text>
@@ -124,12 +124,12 @@
           }"
         >
            <div 
-             class="bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4 shadow-2xl min-w-[200px]"
+             class="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 shadow-2xl min-w-[160px] sm:min-w-[200px]"
              v-motion
              :initial="{ opacity: 0, y: 10 }"
              :enter="{ opacity: 1, y: 0 }"
            >
-             <h3 class="text-primary-lime font-bold text-lg mb-1">
+             <h3 class="text-primary-lime font-bold text-sm sm:text-base md:text-lg mb-1">
                {{ $t(`globalNetwork.${activeLocation.key}`) }}
              </h3>
              <p class="text-white/80 text-xs">
@@ -151,6 +151,7 @@ const mapPoints = computed(() => points.value.filter(p => !p.isPin))
 const pinPoints = computed(() => points.value.filter(p => p.isPin))
 const viewBox = ref('0 0 100 50')
 const activeLocation = ref(null)
+const isMobile = ref(false)
 
 // Network locations with lat/lng coordinates and their corresponding ISO country codes
 const locations = [
@@ -184,6 +185,13 @@ const getPinPosition = (location) => {
 }
 
 onMounted(() => {
+  if (process.client) {
+    isMobile.value = window.innerWidth < 640
+    window.addEventListener('resize', () => {
+      isMobile.value = window.innerWidth < 640
+    })
+  }
+  
   try {
     // Create a single map instance
     const map = new DottedMap({ height: 60, grid: 'diagonal' })
