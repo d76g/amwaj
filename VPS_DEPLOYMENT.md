@@ -132,7 +132,7 @@ Add the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name your-domain.com www.your-domain.com;
+    server_name t9dev.cloud www.t9dev.cloud;
 
     # Redirect HTTP to HTTPS (after SSL setup)
     # return 301 https://$server_name$request_uri;
