@@ -63,10 +63,15 @@
     </div>
 
     <!-- Bottom Section: Oversized Logo -->
-    <div class="mt-6 sm:mt-8 md:mt-12 lg:mt-20 w-full overflow-hidden leading-none flex justify-center items-end">
+    <div class="mt-6 sm:mt-8 md:mt-12 lg:mt-20 w-full overflow-hidden leading-none flex flex-col justify-center items-center relative">
       <h1 ref="logoRef" class="text-[25vw] sm:text-[22vw] md:text-[20vw] font-extrabold text-white text-center uppercase tracking-tighter opacity-10 select-none translate-y-[15%]">
         AMWAJ
       </h1>
+      <div class="mt-4 sm:mt-6 text-center relative z-10">
+        <a href="https://t9dev.nl" target="_blank" rel="noopener noreferrer" class="text-white/40 hover:text-white/60 text-xs sm:text-sm font-light transition-colors inline-block cursor-pointer relative z-10">
+          {{ $t('footer.developed_by') }}
+        </a>
+      </div>
     </div>
   </footer>
 </template>

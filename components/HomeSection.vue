@@ -17,17 +17,6 @@
     <!-- Commodity SVGs - Animated on Scroll with Motion Paths -->
     <!-- These will be positioned initially in AboutSection via GSAP -->
     <div class="pointer-events-none overflow-hidden" style="z-index: 9999; position: fixed; inset: 0;">
-      <!-- Wheat SVG - will start in AboutSection -->
-      <div ref="wheatSvg" class="fixed w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 opacity-0" style="will-change: transform; z-index: 9999;">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-          <path d="M50 10 L45 30 L50 35 L55 30 Z" fill="#FBD965" opacity="0.9"/>
-          <path d="M50 15 L47 25 L50 28 L53 25 Z" fill="#FBD965" opacity="0.7"/>
-          <path d="M50 20 L48 22 L50 24 L52 22 Z" fill="#FBD965" opacity="0.5"/>
-          <line x1="50" y1="30" x2="50" y2="90" stroke="#266243" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="50" cy="90" r="4" fill="#266243"/>
-        </svg>
-      </div>
-
       <!-- Corn SVG - will start in AboutSection -->
       <div ref="cornSvg" class="fixed w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 opacity-0" style="will-change: transform; z-index: 9999;">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -94,9 +83,10 @@
             @click.prevent="scrollToSection('services')"
             @mouseenter="handleButtonHover"
             @mouseleave="handleButtonLeave"
-            class="inline-flex items-center gap-2 bg-accent text-primary-dark pl-4 pr-1 py-2.5 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            class="inline-flex items-center gap-2 bg-accent text-primary-dark py-2.5 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            :class="isRTL ? 'flex-row-reverse pl-1 pr-4' : 'pl-4 pr-1'"
           >
-            <span>{{ $t('home.cta') }}</span>
+            <span :class="{ 'pl-2': isRTL }">{{ $t('home.cta') }}</span>
             <img 
               ref="ctaIcon"
               src="/icons/right-up.png" 
@@ -120,6 +110,9 @@ if (process.client) {
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin)
 }
 
+const { locale } = useI18n()
+const isRTL = computed(() => locale.value === 'ar')
+
 // Use absolute path for public assets
 const logoUrl = '/images/logo.jpeg'
 
@@ -129,7 +122,6 @@ const ctaWrapper = ref(null)
 const bgImageContainer = ref(null)
 const ctaButton = ref(null)
 const ctaIcon = ref(null)
-const wheatSvg = ref(null)
 const cornSvg = ref(null)
 const barleySvg = ref(null)
 const soybeanSvg = ref(null)
@@ -256,7 +248,7 @@ onMounted(() => {
   })
 
   // Initially hide SVGs - they will appear when AboutSection is in view
-  gsap.set([wheatSvg.value, cornSvg.value, barleySvg.value, soybeanSvg.value], {
+  gsap.set([cornSvg.value, barleySvg.value, soybeanSvg.value], {
     opacity: 0,
     scale: 1
   })
@@ -269,12 +261,12 @@ onMounted(() => {
         trigger: aboutSection,
         start: 'top 90%',
         onEnter: () => {
-          gsap.set([wheatSvg.value, cornSvg.value, barleySvg.value, soybeanSvg.value], {
+          gsap.set([cornSvg.value, barleySvg.value, soybeanSvg.value], {
             opacity: 0.8
           })
         },
         onEnterBack: () => {
-          gsap.set([wheatSvg.value, cornSvg.value, barleySvg.value, soybeanSvg.value], {
+          gsap.set([cornSvg.value, barleySvg.value, soybeanSvg.value], {
             opacity: 0.8
           })
         }
@@ -359,10 +351,6 @@ onMounted(() => {
     // Calculate initial positions in AboutSection (as viewport coordinates when AboutSection is at top)
     // When AboutSection is at top of viewport, these are the screen positions
     const initialPositions = {
-      wheat: {
-        x: aboutLeft + aboutWidth * 0.1,
-        y: aboutHeight * 0.2
-      },
       corn: {
         x: aboutLeft + aboutWidth * 0.9,
         y: aboutHeight * 0.2
@@ -379,12 +367,6 @@ onMounted(() => {
 
     // Set initial positions of SVGs in AboutSection using transform
     // For fixed elements, we use x/y transforms relative to viewport
-    gsap.set(wheatSvg.value, {
-      x: initialPositions.wheat.x,
-      y: initialPositions.wheat.y,
-      opacity: 0.8,
-      transformOrigin: 'center center'
-    })
     gsap.set(cornSvg.value, {
       x: initialPositions.corn.x,
       y: initialPositions.corn.y,
@@ -408,12 +390,11 @@ onMounted(() => {
     // Use double requestAnimationFrame to ensure transforms are applied
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        const wheatStartRect = wheatSvg.value?.getBoundingClientRect()
         const cornStartRect = cornSvg.value?.getBoundingClientRect()
         const barleyStartRect = barleySvg.value?.getBoundingClientRect()
         const soybeanStartRect = soybeanSvg.value?.getBoundingClientRect()
 
-        if (!wheatStartRect || !cornStartRect || !barleyStartRect || !soybeanStartRect) {
+        if (!cornStartRect || !barleyStartRect || !soybeanStartRect) {
           setTimeout(createMotionPaths, 100)
           return
         }
@@ -453,7 +434,6 @@ onMounted(() => {
           switch(section.id) {
             case 'services':
               switch(commodity) {
-                case 'wheat': targetPercentX = 0.2; targetPercentY = 0.3; break;
                 case 'corn': targetPercentX = 0.8; targetPercentY = 0.4; break;
                 case 'barley': targetPercentX = 0.3; targetPercentY = 0.7; break;
                 case 'soybean': targetPercentX = 0.7; targetPercentY = 0.6; break;
@@ -461,7 +441,6 @@ onMounted(() => {
               break;
             case 'products':
               switch(commodity) {
-                case 'wheat': targetPercentX = 0.05; targetPercentY = 0.5; break;
                 case 'corn': targetPercentX = 0.95; targetPercentY = 0.5; break;
                 case 'barley': targetPercentX = 0.2; targetPercentY = 0.2; break;
                 case 'soybean': targetPercentX = 0.8; targetPercentY = 0.8; break;
@@ -469,7 +448,6 @@ onMounted(() => {
               break;
             case 'global-network':
               switch(commodity) {
-                case 'wheat': targetPercentX = 0.15; targetPercentY = 0.3; break;
                 case 'corn': targetPercentX = 0.85; targetPercentY = 0.4; break;
                 case 'barley': targetPercentX = 0.25; targetPercentY = 0.7; break;
                 case 'soybean': targetPercentX = 0.75; targetPercentY = 0.6; break;
@@ -477,7 +455,6 @@ onMounted(() => {
               break;
             case 'contact':
               switch(commodity) {
-                case 'wheat': targetPercentX = 0.1; targetPercentY = 0.4; break;
                 case 'corn': targetPercentX = 0.9; targetPercentY = 0.4; break;
                 case 'barley': targetPercentX = 0.2; targetPercentY = 0.8; break;
                 case 'soybean': targetPercentX = 0.8; targetPercentY = 0.8; break;
@@ -519,10 +496,6 @@ onMounted(() => {
             let finalY = 0
             
             switch(commodity) {
-              case 'wheat':
-                finalX = (textCenterDocX - textRect.width * 0.6) - startCenterX
-                finalY = textCenterDocY - startCenterY
-                break
               case 'corn':
                 finalX = (textCenterDocX + textRect.width * 0.6) - startCenterX
                 finalY = textCenterDocY - startCenterY
@@ -545,7 +518,7 @@ onMounted(() => {
       }
 
       // Set initial states
-      gsap.set([wheatSvg.value, cornSvg.value, barleySvg.value, soybeanSvg.value], {
+      gsap.set([cornSvg.value, barleySvg.value, soybeanSvg.value], {
         opacity: 0.8,
         scale: 1
       })
@@ -572,13 +545,7 @@ onMounted(() => {
             endTrigger: footerSection || document.body,
             end: 'bottom top',
             scrub: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              // Debug scroll progress
-              if (commodity === 'wheat' && self.progress % 0.1 < 0.01) {
-                console.log(`${commodity} scroll progress:`, self.progress)
-              }
-            }
+            invalidateOnRefresh: true
           }
         })
 
@@ -598,7 +565,6 @@ onMounted(() => {
       }
 
         // Create timelines for each commodity
-        createCommodityTimeline(wheatSvg.value, 'wheat', wheatStartRect, 1.5)
         createCommodityTimeline(cornSvg.value, 'corn', cornStartRect, 1.8)
         createCommodityTimeline(barleySvg.value, 'barley', barleyStartRect, 2)
         createCommodityTimeline(soybeanSvg.value, 'soybean', soybeanStartRect, 1.6)

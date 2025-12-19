@@ -79,7 +79,8 @@
     "argentina": "Argentina",
     "ukraine": "Ukraine",
     "brazil": "Brazil",
-    "romania": "Romania"
+    "romania": "Romania",
+    "australia": "Australia"
   },
   "contact": {
     "title": "Get in touch",
@@ -108,6 +109,7 @@
     "press": "Press",
     "legal_privacy": "Privacy Policy",
     "legal_terms": "Terms & Conditions",
-    "copyright": "© 2024 AMWAJ COMMODITIES. All rights reserved."
+    "copyright": "© 2024 AMWAJ COMMODITIES. All rights reserved.",
+    "developed_by": "Developed by t9dev.nl"
   }
 }

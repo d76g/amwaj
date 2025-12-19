@@ -97,3 +97,5 @@ amwaj/
 
 MIT
 
+## Developed By
+www.t9dev.nl

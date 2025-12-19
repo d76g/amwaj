@@ -61,9 +61,10 @@
             @click.prevent="scrollToSection('contact')"
             @mouseenter="handleContactButtonHover"
             @mouseleave="handleContactButtonLeave"
-            class="hidden lg:flex items-center gap-2 bg-accent text-primary-dark pl-4 pr-1 py-2 rounded-full text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            class="hidden lg:flex items-center gap-2 bg-accent text-primary-dark py-2 rounded-full text-lg hover:bg-white hover:text-primary-dark transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            :class="isRTL ? 'flex-row-reverse pl-1 pr-4' : 'pl-4 pr-1'"
           >
-            <span>{{ $t('nav.contact') }}</span>
+            <span :class="{ 'pl-2': isRTL }">{{ $t('nav.contact') }}</span>
             <img 
               ref="contactIcon"
               src="/icons/right-up.png" 
@@ -126,8 +127,9 @@
               to="#contact"
               @click.prevent="scrollToSection('contact'); toggleMobileMenu();"
               class="flex items-center justify-center gap-2 bg-accent text-primary-dark px-4 py-3 rounded-lg font-semibold hover:bg-white transition-all duration-300"
+              :class="{ 'flex-row-reverse': isRTL }"
             >
-              <span>{{ $t('nav.contact') }}</span>
+              <span :class="{ 'pl-2': isRTL }">{{ $t('nav.contact') }}</span>
               <img 
                 src="/icons/right-up.png" 
                 alt="arrow up right" 
@@ -161,6 +163,7 @@ if (process.client) {
 const { locale, locales, setLocale } = useI18n()
 const currentLocale = computed(() => locale.value)
 const availableLocales = computed(() => locales.value)
+const isRTL = computed(() => locale.value === 'ar')
 
 // Use absolute path for public assets
 const logoUrl = '/images/logo.jpeg'
@@ -477,9 +480,8 @@ const switchLocale = async (code) => {
   if (code === currentLocale.value) return
   
   try {
-    await setLocale(code)
-    // The i18n plugin will handle the direction update via watcher
-    // But we can also update immediately for better UX
+    await setLocale(code, { useCookie: true })
+    // Update direction immediately for better UX
     if (process.client) {
       await nextTick()
       const dir = code === 'ar' ? 'rtl' : 'ltr'

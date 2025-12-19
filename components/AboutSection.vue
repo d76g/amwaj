@@ -33,9 +33,10 @@
           <!-- CTA Button -->
           <NuxtLink 
             to="#contact"
-            class="inline-flex items-center gap-2 sm:gap-3 bg-accent text-primary-dark pl-3 sm:pl-4 pr-1 py-2 sm:py-2.5 rounded-full font-semibold transition-transform hover:scale-105 text-sm sm:text-base md:text-lg"
+            class="inline-flex items-center gap-2 sm:gap-3 bg-accent text-primary-dark py-2 sm:py-2.5 rounded-full font-semibold transition-transform hover:scale-105 text-sm sm:text-base md:text-lg"
+            :class="isRTL ? 'flex-row-reverse pl-1 pr-3 sm:pr-4' : 'pl-3 sm:pl-4 pr-1'"
           >
-            <span>{{ $t('about.cta') }}</span>
+            <span :class="{ 'pl-2': isRTL }">{{ $t('about.cta') }}</span>
             <div>
               <img src="/icons/right-up.png" alt="arrow" class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </div>
@@ -93,6 +94,9 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const { locale } = useI18n()
+const isRTL = computed(() => locale.value === 'ar')
 
 const leftCol = ref(null)
 const rightCol = ref(null)

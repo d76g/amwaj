@@ -161,7 +161,8 @@ const locations = [
   { key: 'argentina', lat: -38.4161, lng: -63.6167, countries: ['ARG'] },
   { key: 'ukraine', lat: 48.3794, lng: 31.1656, countries: ['UKR'] },
   { key: 'brazil', lat: -14.2350, lng: -51.9253, countries: ['BRA'] },
-  { key: 'romania', lat: 45.9432, lng: 24.9668, countries: ['ROU'] }
+  { key: 'romania', lat: 45.9432, lng: 24.9668, countries: ['ROU'] },
+  { key: 'australia', lat: -25.2744, lng: 133.7751, countries: ['AUS'] }
 ]
 
 // Get all unique country codes to highlight

@@ -215,12 +215,11 @@ onMounted(() => {
     }
   )
 
-  // Market Intelligence Card - Animate from left (optimized for performance)
+  // Market Intelligence Card - Animate from right with bounce
   if (marketIntelligenceCard.value) {
-    // Use fromTo for better performance and smoother animation
-    const marketIntelligenceTL = gsap.fromTo(marketIntelligenceCard.value, 
+    gsap.fromTo(marketIntelligenceCard.value, 
       {
-        x: -60,
+        x: 100,
         autoAlpha: 0,
         force3D: true
       },
@@ -230,17 +229,15 @@ onMounted(() => {
           start: 'top 85%',
           toggleActions: 'play none none reverse',
           once: true,
-          invalidateOnRefresh: true,
-          markers: false
+          invalidateOnRefresh: true
         },
         x: 0,
         autoAlpha: 1,
-        duration: 0.7,
-        ease: 'power2.out',
+        duration: 1,
+        ease: 'back.out(1.7)',
         force3D: true,
         immediateRender: false,
         onComplete: () => {
-          // Remove will-change after animation for better performance
           if (marketIntelligenceCard.value) {
             marketIntelligenceCard.value.style.willChange = 'auto'
           }
@@ -249,12 +246,11 @@ onMounted(() => {
     )
   }
 
-  // Finance Solutions Card - Animate from right (optimized for performance)
+  // Finance Solutions Card - Animate from left with bounce
   if (financeSolutionsCard.value) {
-    // Use fromTo for better performance and smoother animation
-    const financeSolutionsTL = gsap.fromTo(financeSolutionsCard.value, 
+    gsap.fromTo(financeSolutionsCard.value, 
       {
-        x: 60,
+        x: -100,
         autoAlpha: 0,
         force3D: true
       },
@@ -264,18 +260,16 @@ onMounted(() => {
           start: 'top 85%',
           toggleActions: 'play none none reverse',
           once: true,
-          invalidateOnRefresh: true,
-          markers: false
+          invalidateOnRefresh: true
         },
         x: 0,
         autoAlpha: 1,
-        duration: 0.7,
-        ease: 'power2.out',
+        duration: 1,
+        ease: 'back.out(1.7)',
         force3D: true,
         immediateRender: false,
-        delay: 0.1, // Small stagger to prevent resource contention
+        delay: 0.15,
         onComplete: () => {
-          // Remove will-change after animation for better performance
           if (financeSolutionsCard.value) {
             financeSolutionsCard.value.style.willChange = 'auto'
           }
