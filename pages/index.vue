@@ -35,11 +35,6 @@
 </template>
 
 <script setup>
-useHead({
-  title: 'AMWAJ COMMODITIES - Agri-Commodities Trading',
-  meta: [
-    { name: 'description', content: 'AMWAJ COMMODITIES is an international agri-commodity trading firm specializing in the trading and distribution of grains and oilseed products.' }
-  ]
-})
+// SEO and Meta tags are handled in app.vue globally
 </script>
 

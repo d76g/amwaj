@@ -2,6 +2,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://amwajcommodities.com'
+    }
+  },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
